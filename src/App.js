@@ -1,25 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+const WS = global.WebSocket;
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const url = "ws://localhost:8080";
+  const wsClient = new WS(url);
+  if (wsClient) {
+    wsClient.onopen = e => {
+      console.log("ws connection is open");
+    };
+    wsClient.onmessage = e => {
+      console.log(e.data);
+    };
+  }
+  return <div className="App" />;
 }
 
 export default App;
